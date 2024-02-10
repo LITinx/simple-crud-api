@@ -5,6 +5,7 @@ import { deleteRequest } from './methods/deleteRequest.js'
 import { getRequest } from './methods/getRequest.js'
 import { postRequest } from './methods/postRequest.js'
 import { IRequest, IUsers } from './types/types.js'
+import { putRequest } from './methods/putRequest.js'
 
 const require = createRequire(import.meta.url)
 
@@ -23,6 +24,7 @@ const server = createServer((req, res) => {
 			postRequest(req as IRequest, res)
 			break
 		case 'PUT':
+			putRequest(req as IRequest, res)
 			break
 		case 'DELETE':
 			deleteRequest(req, res)
