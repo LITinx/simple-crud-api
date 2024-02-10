@@ -18,11 +18,11 @@ export const InvalidBody = {
 	status: 404,
 	body: {
 		error: {
-			message: 'Request body is not valid',
+			message: 'Request body is not found',
 		},
 	},
 }
-export const NotUserFound = (id: string) => ({
+export const UserNotFound = (id: string) => ({
 	status: 404,
 	body: {
 		error: {

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import { createServer } from 'http'
 import { createRequire } from 'module'
+import { deleteRequest } from './methods/deleteRequest.js'
 import { getRequest } from './methods/getRequest.js'
 import { postRequest } from './methods/postRequest.js'
 import { IRequest, IUsers } from './types/types.js'
@@ -24,6 +25,7 @@ const server = createServer((req, res) => {
 		case 'PUT':
 			break
 		case 'DELETE':
+			deleteRequest(req, res)
 			break
 		default:
 			break

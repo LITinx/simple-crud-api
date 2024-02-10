@@ -1,12 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'http'
 import { users } from '../server.js'
 import {
-	NotFound,
 	UUIDIsNotValid,
 	UserNotFound,
 } from './responseMessages/responseMessages.js'
+import { writeToFile } from '../utils/writeToFile.js'
 
-export const getRequest = (
+export const deleteRequest = (
 	req: IncomingMessage,
 	res: ServerResponse<IncomingMessage>,
 ) => {
@@ -15,12 +15,7 @@ export const getRequest = (
 	const uuidRegex = new RegExp(
 		/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i,
 	)
-	if (req.url === '/api/users') {
-		res.statusCode = 200
-		res.setHeader('Content-Type', 'application/json')
-		res.write(JSON.stringify(users))
-		res.end()
-	} else if (idFromUrl && !uuidRegex.test(idFromUrl)) {
+	if (idFromUrl && !uuidRegex.test(idFromUrl)) {
 		res.writeHead(400, { 'Content-Type': 'application/json' })
 		res.end(JSON.stringify(UUIDIsNotValid))
 	} else if (
@@ -28,20 +23,17 @@ export const getRequest = (
 		idFromUrl &&
 		uuidRegex.test(idFromUrl)
 	) {
-		const responseUsers = users.filter((user) => {
+		const userToDeleteIndex = users.findIndex((user) => {
 			return user.id === idFromUrl
 		})
-		if (responseUsers.length > 0) {
-			res.statusCode = 200
-			res.setHeader('Content-Type', 'application/json')
-			res.write(JSON.stringify(responseUsers))
-			res.end()
-		} else {
+		if (userToDeleteIndex === -1) {
 			res.writeHead(404, { 'Content-Type': 'application/json' })
 			res.end(JSON.stringify(UserNotFound(idFromUrl)))
+		} else {
+			users.splice(userToDeleteIndex, 1)
+			writeToFile(users)
+			res.writeHead(204, { 'Content-Type': 'application/json' })
+			res.end(JSON.stringify(users))
 		}
-	} else {
-		res.writeHead(404, { 'Content-Type': 'application/json' })
-		res.end(JSON.stringify(NotFound))
 	}
 }
