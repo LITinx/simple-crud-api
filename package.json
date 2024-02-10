@@ -1,19 +1,27 @@
 {
-  "name": "simple-crud-api",
-  "version": "1.0.0",
-  "description": "Users CRUD Api",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LITinx/simple-crud-api.git"
-  },
-  "author": "Daniel",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LITinx/simple-crud-api/issues"
-  },
-  "homepage": "https://github.com/LITinx/simple-crud-api#readme"
+	"name": "simple-crud-api",
+	"version": "1.0.0",
+	"description": "Users CRUD Api",
+	"main": "src/server.ts",
+	"type": "module",
+	"scripts": {
+		"start": "nodemon --exec node --loader ts-node/esm src/server.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/LITinx/simple-crud-api.git"
+	},
+	"author": "Daniel",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/LITinx/simple-crud-api/issues"
+	},
+	"homepage": "https://github.com/LITinx/simple-crud-api#readme",
+	"devDependencies": {
+		"@types/node": "^20.11.17",
+		"dotenv": "^16.4.1",
+		"nodemon": "^3.0.3",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.3.3"
+	}
 }
