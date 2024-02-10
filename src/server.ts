@@ -2,15 +2,13 @@ import dotenv from 'dotenv'
 import { createServer } from 'http'
 import { createRequire } from 'module'
 import { getRequest } from './methods/getRequest.js'
+import { postRequest } from './methods/postRequest.js'
+import { IRequest, IUsers } from './types/types.js'
 
 const require = createRequire(import.meta.url)
-interface IUsers {
-	id: string
-	username: string
-	age: string
-	hobbies: Array<string>
-}
+
 export const users: Array<IUsers> = await require('../data/users.json')
+
 dotenv.config()
 
 const PORT = process.env.PORT || 5001
@@ -21,6 +19,7 @@ const server = createServer((req, res) => {
 			getRequest(req, res)
 			break
 		case 'POST':
+			postRequest(req as IRequest, res)
 			break
 		case 'PUT':
 			break

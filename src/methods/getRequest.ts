@@ -12,14 +12,9 @@ export const getRequest = (
 ) => {
 	const baseUrl = req.url?.substring(0, req.url.lastIndexOf('/') + 1)
 	const idFromUrl = req.url?.split('/')[3]
-	console.log(baseUrl)
-	console.log(idFromUrl)
-
 	const uuidRegex = new RegExp(
 		/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i,
 	)
-	console.log(idFromUrl && uuidRegex.test(idFromUrl))
-
 	if (req.url === '/api/users') {
 		res.statusCode = 200
 		res.setHeader('Content-Type', 'application/json')

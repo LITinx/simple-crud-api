@@ -14,6 +14,14 @@ export const NotFound = {
 		},
 	},
 }
+export const InvalidBody = {
+	status: 404,
+	body: {
+		error: {
+			message: 'Request body is not valid',
+		},
+	},
+}
 export const NotUserFound = (id: string) => ({
 	status: 404,
 	body: {
