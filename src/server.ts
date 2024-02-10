@@ -4,7 +4,13 @@ import { createRequire } from 'module'
 import { getRequest } from './methods/getRequest.js'
 
 const require = createRequire(import.meta.url)
-export const users = await require('../data/users.json')
+interface IUsers {
+	id: string
+	username: string
+	age: string
+	hobbies: Array<string>
+}
+export const users: Array<IUsers> = await require('../data/users.json')
 dotenv.config()
 
 const PORT = process.env.PORT || 5001
