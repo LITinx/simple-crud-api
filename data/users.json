@@ -1,1 +1,14 @@
-[{"id":"b4ada2fd-f1b5-4047-ad10-1a2ab359ad45","username":"Jack","age":"24","hobbies":["basketball","football"]},{"id":"1919ba13-fd9f-4b7d-9d7e-9ea1b1439cdf","username":"David","age":"24","hobbies":["Hiking"]},{"id":"23018e61-3504-4e11-8bfd-4b21b5383ea8","username":"Brian","age":"24","hobbies":["Hiking"]}]
+[
+	{
+		"id": "b4ada2fd-f1b5-4047-ad10-1a2ab359ad45",
+		"username": "Jack",
+		"age": "24",
+		"hobbies": ["basketball", "football"]
+	},
+	{
+		"id": "1919ba13-fd9f-4b7d-9d7e-9ea1b1439cdf",
+		"username": "David",
+		"age": "24",
+		"hobbies": ["Hiking"]
+	}
+]
