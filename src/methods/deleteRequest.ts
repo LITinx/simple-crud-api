@@ -2,7 +2,11 @@ import { IncomingMessage, ServerResponse } from 'http'
 import { users, uuidRegex } from '../server.js'
 import { getUrlInfo } from '../utils/getUrlInfo.js'
 import { responseAnswer } from '../utils/responseAnswer.js'
-import { UUIDIsNotValid, UserNotFound } from '../utils/responseMessages.js'
+import {
+	UUIDIsNotValid,
+	UserNotFound,
+	UserSuccessfullyDeleted,
+} from '../utils/responseMessages.js'
 import { writeToFile } from '../utils/writeToFile.js'
 
 export const deleteRequest = (
@@ -24,8 +28,11 @@ export const deleteRequest = (
 			responseAnswer(res, 404, UserNotFound(idFromUrl))
 		} else {
 			users.splice(userToDeleteIndex, 1)
+
+			console.log('delete', users)
+
 			writeToFile(users)
-			responseAnswer(res, 204, users)
+			responseAnswer(res, 204)
 		}
 	}
 }

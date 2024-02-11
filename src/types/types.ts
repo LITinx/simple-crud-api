@@ -1,7 +1,7 @@
 import { IncomingMessage } from 'http'
 
 export interface IUsers {
-	id: string
+	id?: string
 	username: string
 	age: string
 	hobbies: Array<string>

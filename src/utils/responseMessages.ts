@@ -30,3 +30,11 @@ export const UserNotFound = (id: string) => ({
 		},
 	},
 })
+export const UserSuccessfullyDeleted = (id: string) => ({
+	status: 204,
+	body: {
+		error: {
+			message: `User with ID:${id} successfully deleted`,
+		},
+	},
+})

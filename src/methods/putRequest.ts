@@ -33,6 +33,8 @@ export const putRequest = async (
 		} else {
 			const ownId = users[userToUpdateIndex].id
 			users[userToUpdateIndex] = { ...body, id: ownId }
+
+			console.log('put', users)
 			writeToFile(users)
 			responseAnswer(res, 200, users)
 		}

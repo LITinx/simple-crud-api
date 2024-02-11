@@ -20,6 +20,8 @@ export const postRequest = async (
 			}
 			body.id = crypto.randomUUID()
 			users.push(body)
+			console.log('post', users)
+
 			writeToFile(users)
 			responseAnswer(res, 201, users)
 		} catch {
