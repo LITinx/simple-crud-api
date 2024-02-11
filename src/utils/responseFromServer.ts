@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { IUsers } from '../../types/types.js'
+import { IUsers } from '../types/types.js'
 
 interface IMessage {
 	status: number
