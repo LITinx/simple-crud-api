@@ -6,6 +6,8 @@ import { getRequest } from './methods/getRequest.js'
 import { postRequest } from './methods/postRequest.js'
 import { putRequest } from './methods/putRequest.js'
 import { IRequest, IUsers } from './types/types.js'
+import { responseAnswer } from './utils/responseAnswer.js'
+import { NotFound } from './utils/responseMessages.js'
 
 const require = createRequire(import.meta.url)
 export const uuidRegex = new RegExp(
@@ -32,6 +34,7 @@ const server = createServer((req, res) => {
 			deleteRequest(req, res)
 			break
 		default:
+			responseAnswer(res, 404, NotFound)
 			break
 	}
 })
