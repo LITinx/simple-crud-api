@@ -1,7 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { users } from '../server.js'
+import { users, uuidRegex } from '../server.js'
 import { IRequest } from '../types/types.js'
 import { bodyParser } from '../utils/bodyParser.js'
+import { getUrlInfo } from '../utils/getUrlInfo.js'
+import { responseAnswer } from '../utils/responseAnswer.js'
 import { writeToFile } from '../utils/writeToFile.js'
 import {
 	NotFound,
@@ -13,15 +15,10 @@ export const putRequest = async (
 	req: IRequest,
 	res: ServerResponse<IncomingMessage>,
 ) => {
-	const baseUrl = req.url?.substring(0, req.url.lastIndexOf('/') + 1)
-	const idFromUrl = req.url?.split('/')[3]
-	const uuidRegex = new RegExp(
-		/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i,
-	)
+	const { baseUrl, idFromUrl } = getUrlInfo(req)
 
 	if (idFromUrl && !uuidRegex.test(idFromUrl)) {
-		res.writeHead(400, { 'Content-Type': 'application/json' })
-		res.end(JSON.stringify(UUIDIsNotValid))
+		responseAnswer(res, 400, UUIDIsNotValid)
 	} else if (
 		baseUrl === '/api/users/' &&
 		idFromUrl &&
@@ -32,17 +29,14 @@ export const putRequest = async (
 			return user.id === idFromUrl
 		})
 		if (userToUpdateIndex === -1) {
-			res.writeHead(404, { 'Content-Type': 'application/json' })
-			res.end(JSON.stringify(UserNotFound(idFromUrl)))
+			responseAnswer(res, 404, UserNotFound(idFromUrl))
 		} else {
 			const ownId = users[userToUpdateIndex].id
 			users[userToUpdateIndex] = { ...body, id: ownId }
 			writeToFile(users)
-			res.writeHead(200, { 'Content-Type': 'application/json' })
-			res.end(JSON.stringify(users))
+			responseAnswer(res, 200, users)
 		}
 	} else {
-		res.writeHead(404, { 'Content-Type': 'application/json' })
-		res.end(JSON.stringify(NotFound))
+		responseAnswer(res, 404, NotFound)
 	}
 }
