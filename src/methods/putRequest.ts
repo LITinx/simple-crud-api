@@ -4,12 +4,12 @@ import { IRequest } from '../types/types.js'
 import { bodyParser } from '../utils/bodyParser.js'
 import { getUrlInfo } from '../utils/getUrlInfo.js'
 import { responseAnswer } from '../utils/responseAnswer.js'
-import { writeToFile } from '../utils/writeToFile.js'
 import {
 	NotFound,
 	UUIDIsNotValid,
 	UserNotFound,
-} from './responseMessages/responseMessages.js'
+} from '../utils/responseMessages.js'
+import { writeToFile } from '../utils/writeToFile.js'
 
 export const putRequest = async (
 	req: IRequest,

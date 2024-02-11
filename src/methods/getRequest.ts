@@ -1,12 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'http'
 import { users, uuidRegex } from '../server.js'
+import { getUrlInfo } from '../utils/getUrlInfo.js'
 import { responseAnswer } from '../utils/responseAnswer.js'
 import {
 	NotFound,
 	UUIDIsNotValid,
 	UserNotFound,
-} from './responseMessages/responseMessages.js'
-import { getUrlInfo } from '../utils/getUrlInfo.js'
+} from '../utils/responseMessages.js'
 
 export const getRequest = (
 	req: IncomingMessage,

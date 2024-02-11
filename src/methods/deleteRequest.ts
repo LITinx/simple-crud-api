@@ -2,11 +2,8 @@ import { IncomingMessage, ServerResponse } from 'http'
 import { users, uuidRegex } from '../server.js'
 import { getUrlInfo } from '../utils/getUrlInfo.js'
 import { responseAnswer } from '../utils/responseAnswer.js'
+import { UUIDIsNotValid, UserNotFound } from '../utils/responseMessages.js'
 import { writeToFile } from '../utils/writeToFile.js'
-import {
-	UUIDIsNotValid,
-	UserNotFound,
-} from './responseMessages/responseMessages.js'
 
 export const deleteRequest = (
 	req: IncomingMessage,

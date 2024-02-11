@@ -5,8 +5,8 @@ import { IRequest, IUsers } from '../types/types.js'
 import { bodyParser } from '../utils/bodyParser.js'
 import { bodyValidator } from '../utils/bodyValidator.js'
 import { responseAnswer } from '../utils/responseAnswer.js'
+import { InvalidBody } from '../utils/responseMessages.js'
 import { writeToFile } from '../utils/writeToFile.js'
-import { InvalidBody } from './responseMessages/responseMessages.js'
 
 export const postRequest = async (
 	req: IRequest,
