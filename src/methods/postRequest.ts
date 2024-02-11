@@ -4,6 +4,7 @@ import { users } from '../server.js'
 import { IRequest, IUsers } from '../types/types.js'
 import { bodyParser } from '../utils/bodyParser.js'
 import { bodyValidator } from '../utils/bodyValidator.js'
+import { responseAnswer } from '../utils/responseAnswer.js'
 import { writeToFile } from '../utils/writeToFile.js'
 import { InvalidBody } from './responseMessages/responseMessages.js'
 
@@ -15,18 +16,14 @@ export const postRequest = async (
 		try {
 			const body: IUsers = await bodyParser(req)
 			if (!bodyValidator(body)) {
-				res.writeHead(400, { 'Content-Type': 'application/json' })
-				res.end(JSON.stringify(InvalidBody))
+				responseAnswer(res, 400, InvalidBody)
 			}
 			body.id = crypto.randomUUID()
 			users.push(body)
 			writeToFile(users)
-			res.statusCode = 201
-			res.setHeader('Content-Type', 'application/json')
-			res.end()
+			responseAnswer(res, 201, users)
 		} catch {
-			res.writeHead(400, { 'Content-Type': 'application/json' })
-			res.end(JSON.stringify(InvalidBody))
+			responseAnswer(res, 400, InvalidBody)
 		}
 	}
 }

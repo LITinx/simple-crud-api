@@ -18,7 +18,7 @@ export const InvalidBody = {
 	status: 404,
 	body: {
 		error: {
-			message: 'Request body is not found',
+			message: 'Request body is not valid',
 		},
 	},
 }
