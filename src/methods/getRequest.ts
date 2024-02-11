@@ -1,28 +1,23 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { users } from '../server.js'
+import { users, uuidRegex } from '../server.js'
+import { responseAnswer } from '../utils/responseAnswer.js'
 import {
 	NotFound,
 	UUIDIsNotValid,
 	UserNotFound,
 } from './responseMessages/responseMessages.js'
+import { getUrlInfo } from '../utils/getUrlInfo.js'
 
 export const getRequest = (
 	req: IncomingMessage,
 	res: ServerResponse<IncomingMessage>,
 ) => {
-	const baseUrl = req.url?.substring(0, req.url.lastIndexOf('/') + 1)
-	const idFromUrl = req.url?.split('/')[3]
-	const uuidRegex = new RegExp(
-		/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i,
-	)
+	const { baseUrl, idFromUrl } = getUrlInfo(req)
+
 	if (req.url === '/api/users') {
-		res.statusCode = 200
-		res.setHeader('Content-Type', 'application/json')
-		res.write(JSON.stringify(users))
-		res.end()
+		responseAnswer(res, 200, users)
 	} else if (idFromUrl && !uuidRegex.test(idFromUrl)) {
-		res.writeHead(400, { 'Content-Type': 'application/json' })
-		res.end(JSON.stringify(UUIDIsNotValid))
+		responseAnswer(res, 400, UUIDIsNotValid)
 	} else if (
 		baseUrl === '/api/users/' &&
 		idFromUrl &&
@@ -32,16 +27,11 @@ export const getRequest = (
 			return user.id === idFromUrl
 		})
 		if (responseUsers.length > 0) {
-			res.statusCode = 200
-			res.setHeader('Content-Type', 'application/json')
-			res.write(JSON.stringify(responseUsers))
-			res.end()
+			responseAnswer(res, 200, responseUsers)
 		} else {
-			res.writeHead(404, { 'Content-Type': 'application/json' })
-			res.end(JSON.stringify(UserNotFound(idFromUrl)))
+			responseAnswer(res, 404, UserNotFound(idFromUrl))
 		}
 	} else {
-		res.writeHead(404, { 'Content-Type': 'application/json' })
-		res.end(JSON.stringify(NotFound))
+		responseAnswer(res, 404, NotFound)
 	}
 }

@@ -4,11 +4,13 @@ import { createRequire } from 'module'
 import { deleteRequest } from './methods/deleteRequest.js'
 import { getRequest } from './methods/getRequest.js'
 import { postRequest } from './methods/postRequest.js'
-import { IRequest, IUsers } from './types/types.js'
 import { putRequest } from './methods/putRequest.js'
+import { IRequest, IUsers } from './types/types.js'
 
 const require = createRequire(import.meta.url)
-
+export const uuidRegex = new RegExp(
+	/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i,
+)
 export const users: Array<IUsers> = await require('../data/users.json')
 
 dotenv.config()
