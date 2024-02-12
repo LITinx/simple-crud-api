@@ -17,13 +17,12 @@ export const postRequest = async (
 			const body: IUsers = await bodyParser(req)
 			if (!bodyValidator(body)) {
 				responseAnswer(res, 400, InvalidBody)
+			} else {
+				body.id = crypto.randomUUID()
+				users.push(body)
+				writeToFile(users)
+				responseAnswer(res, 201, users)
 			}
-			body.id = crypto.randomUUID()
-			users.push(body)
-			console.log('post', users)
-
-			writeToFile(users)
-			responseAnswer(res, 201, users)
 		} catch {
 			responseAnswer(res, 400, InvalidBody)
 		}
